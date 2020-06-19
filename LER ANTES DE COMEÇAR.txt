@@ -27,6 +27,7 @@ seu projeto
 
 9) Para fazer o cadastro e login verifique o arquivo de exemplo dentro da pasta public > exemplo.txt
 
+10) Sempre teste e verifique se inseri lá no azure 
 
 -- Lembre-se sempre verifique o terminal para possiveis erros!
 
