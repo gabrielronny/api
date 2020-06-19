@@ -27,55 +27,20 @@ routes.post('/user', (request, response) => {
 				response.json({
 					message: "Usuário criado com sucesso!"
 				});
-		
-				const bodyEmailUser = {
-					from: 'gabriel.pereira@bandtec.com.br',
-					to: email,
-					subject: 'Sucesso!',
-					html: 'Seu usuário foi criado com sucesso!'
-				}
-		
-				transporter.sendMail(bodyEmailUser, (err) => {
-					if (err) console.log(err)
-					console.log('Email Enviado')
-				})
 			});
 		}
 	})
 	
 });
 
-routes.post('/news', (request, response) => {
-	const { email }= request.body;
-	console.log(email)
-	let sql = `INSERT INTO newsCliente(emailClienteNews) VALUES('${email}')`;
-	db.query(sql, (err, result) => {
-		if(err) throw err;
-		response.json({ message: "Criado com sucesso!" });
 
-		const bodyEmailNews = {
-			from: 'gabriel.pereira@bandtec.com.br',
-			to: email,
-			subject: 'Ficamos Felizes',
-			html: 'Logo mais você receberá mais histórias sobre o espaço'
-		}
-		
-		transporter.sendMail(bodyEmailNews, (err) => {
-			if (err) console.log(err)
-			console.log('Email enviado!')
-		});
-	});
-
-});
-
-
+// Rotas para lista os usuários
 routes.get('/user/all', (request, response) => {
 	let sql = "SELECT * FROM usuario";
 	db.query(sql, (err, result) => {
 		response.json(result.recordsets[0]);
 	});
 })
-
 
 
 // Login do usuário

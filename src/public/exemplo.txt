@@ -1,84 +1,69 @@
 
 
 
-// url padrão da api
+// url padrão da api 
+// SEMPRE UTILIZE A VARIÁVEL URL!
 let url = 'http://localhost:3333';
 
-// pegando o elemento do botão
-let btnSubmit = document.querySelector('.btn-submit');
-
-// Criando o evento de quando clicar no botão de login
-btnSubmit.addEventListener('click', () => {
+// Exemplo para o cadastro do usuário
+fetch(url + '/user', {
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    method: "POST",
+    body: JSON.stringify({ 
+        name: idDoNome.value,
+        email: idDoEmail.value, 
+        password: idDaSenha.value
+        })
     
-    let nome = document.getElementById('nome');
-    let email = document.getElementById('email');
-    let senha = document.getElementById('senha');
+}).then(resposta => {
+    if(resposta.ok) {
+        resposta.json().then(json => {
+            console.log(json.message)
+            // Caso o usuario foi criado com sucesso
+            if(json.message == "Usuário criado com sucesso!") {
 
-
-    // Verificando se os campos estão vazios
-    if(email.value === '' || senha.value === '' || nome.value === '') { 
-        
-        email.classList.remove('is-invalid-input');
-        senha.classList.remove('is-invalid-input');
-
-        nome.classList.remove('is-invalid-input');
-        if(email.value === '') {
-            email.classList.add('is-invalid-input');
-        }
-        if(senha.value === '') {
-            senha.classList.add('is-invalid-input');
-        }
-        if(nome.value === '') {
-            nome.classList.add('is-invalid-input');
-        }
-
-        // Mostrando a mensagem
-        document.querySelector('.message-form').style.display = "block";
-
-    } else {
-        // Ocutando a mensagem
-        document.querySelector('.message-form').style.display = "none";
-        email.classList.remove('is-invalid-input');
-        senha.classList.remove('is-invalid-input');
-        nome.classList.remove('is-invalid-input');
-
-        email = email.value;
-        senha = senha.value;
-        nome = nome.value;
-       
-        fetch(url + '/user', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ 
-                name: nome,
-                email, 
-                password: senha
-             })
-            
-        }).then(resposta => {
-            if(resposta.ok) {
-                resposta.json().then(json => {
-                    console.log(json.message)
-                    if(json.message == "Usuário criado com sucesso!") {
-                        document.querySelector('.message-form2').style.display = "block";
-                        setTimeout(() => {
-                            window.location.href = 'login.html'
-                        }, 1200);
-                    }
-                    if(json.message == "Esse usuário já existe!") {
-                        document.querySelector('.message-form').style.display = "block";
-                        document.querySelector('.message-form span').innerHTML = `Opps... ${json.message}`;
-
-                        document.getElementById('nome').classList.add('is-invalid-input');
-                        document.getElementById('email').classList.add('is-invalid-input');
-                        document.getElementById('senha').classList.add('is-invalid-input');
-                    }
-                });
+                // Tempo de espera para redirecionar para outra página
+                // após o cadastro
+                setTimeout(() => {
+                    window.location.href = 'login.html'
+                }, 1200);
+            }
+            // Caso o usuario já exista
+            if(json.message == "Esse usuário já existe!") {
+               
             }
         });
     }
+});
+    
 
+
+// Exemplo para o login do usuário
+
+fetch(url + '/login', {
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    method: "POST",
+    body: JSON.stringify({ 
+        email: idDoEmail.value, 
+        senha: idDaSenha.value
+    })
+    
+}).then(resposta => {
+    if(resposta.ok) {
+        resposta.json().then(json => {
+            console.log(json.message)
+            // Se o login estiver certo
+            if(json.message == "Login feito com sucesso!") {
+                window.location.href = "../pages/lista-usuarios.html";
+            } else {
+               
+            }
+        });
+    }
 });

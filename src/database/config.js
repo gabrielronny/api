@@ -1,9 +1,9 @@
 const sql = require('mssql');
 
 let dbConfig = {
-	server: 'SERVER',
-	user: 'USUARIO',
-	password: 'SENHA',
+	server: 'SERVIDOR AZURE',
+	user: 'USUARIO DO SERVIDOR',
+	password: 'SENHA DO BANCO DE DADOS',
 	database: 'NOME DO BANCO DE DADOS',
 	"options": {
 		"encrypt": true,
